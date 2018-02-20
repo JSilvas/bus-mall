@@ -2,7 +2,8 @@
 console.log('We have signal!');
 // Data+++++++++++++++++++++++++++++++++++++++++++++++++++++
 // total clicks array
-var clickCounter = 25;
+var clickCounter = 5;
+var viewed = [];
 Product.allProducts = [];
 
 // global vars for DOM
@@ -18,7 +19,6 @@ function Product(name, alt, filepath) {
   this.clicks = 0;
   this.views = 0;
   Product.allProducts.push(this);
-  console.log('Look! I made a ' + this.name + '!');
 }
 
 // Object Instances
@@ -52,6 +52,8 @@ function instProducts() {
 // var pick2 = document.getElementById('two');
 // var pick3 = document.getElementById('three');
 
+// random()
+// test for dupes()
 function randomProducts() { //add no-duplicate feature later
   var pickArray = [];
   while (pickArray[0] === pickArray[1] || pickArray[0] === pickArray[2] || pickArray[1] === pickArray[2]) {
@@ -62,7 +64,7 @@ function randomProducts() { //add no-duplicate feature later
     }
   }
   return pickArray;
-}// random()
+}
 
 function attrToImg() {
   var pick123 = randomProducts();
@@ -84,7 +86,10 @@ function attrToImg() {
 
   console.log(pick123.name, 'is being displayed');
 }
-// test for dupes()
+
+
+//.includes() and indexOf
+// array manipulation ==> .push .pop .shift .unshift
 
 // display pages ()
 
