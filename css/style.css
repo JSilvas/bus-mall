@@ -1,0 +1,10 @@
+ul {
+  display: inline-block;
+}
+ul li {
+  display: inline-block;
+}
+ul img {
+  max-width: 450px;
+  max-height: 450px;
+}
