@@ -55,15 +55,16 @@ function instProducts() {
 // random()
 function randomProducts() { //add no-duplicate feature later
   var pickArray = [];
-  for (var i = 0; i < 3; i++) {
-    var randProd = Math.floor(Math.random() * Product.allProducts.length);
-    pickArray.push(randProd);
+  while (pickArray[0] === pickArray[1] || pickArray[0] === pickArray[2] || pickArray[1] === pickArray[2]) {
+    pickArray = [];
+    for (var i = 0; i < 3; i++) {
+      var randPick = Math.floor(Math.random() * Product.allProducts.length);
+      pickArray.push(randPick);
+    }
   }
-  console.log('Index positions from random function: ' + pickArray);
-  console.log('Random product picks: ' + Product.allProducts[pickArray]);
   return pickArray;
 }
-function AttrToImg() {
+function attrToImg() {
   var pick123 = randomProducts();
   console.log(pick123, 'pick123');
   console.log(Product.allProducts[pick123[0]]);
@@ -96,9 +97,11 @@ function AttrToImg() {
 instProducts();
 // console.table(Product.allProducts);
 // console.table(totalClicks);
-AttrToImg();
+attrToImg();
 // show images on page
 
 // event listener(s)
 // Now we need to listen for clicks on the product and then display a new product
-pick1.addEventListener('click', AttrToImg);
+pick1.addEventListener('click', attrToImg);
+pick2.addEventListener('click', attrToImg);
+pick3.addEventListener('click', attrToImg);
