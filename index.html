@@ -7,13 +7,15 @@
     <title>BusMall Product Research</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
   </head>
   <body>
     <header>
       <nav>
         <ul>
-          <li>Take Survey</li>
-          <li>History</li>
+          <li><a href="">Take a Survey</a></li>
+          <li><a href="">Historical Data</a></li>
+          <li><a href="">About</a></li>
         </ul>
       </nav>    
     </header>
@@ -27,7 +29,10 @@
           <li><img id="center" src="" alt="" title=""></li>
           <li><img id="right" src="" alt="" title=""></li>
         </ul>
-      </section>  
+      </section>
+      
+      <canvas id="bar-chart" width="920px" height="400px"></canvas>
+      
       <ul id="results"></ul>
     </main>
     <footer>

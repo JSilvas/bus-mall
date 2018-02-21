@@ -1,10 +1,16 @@
 body {
   text-align: center;
+  font-size: 1em;
+}
+nav li {
+  display: inline-block;
+  margin: 30px 75px 30px 75px;
+  font-size: 2em;
 }
 main {
   text-align: left;
   padding: 25px;
-  background: greenyellow;
+  background: lightgrey;
   max-width: 960px;
   margin: auto;
 }
@@ -26,6 +32,12 @@ main {
   max-height: 300px;
 }
 
+#bar-chart {
+  outline: darkcyan solid 20px;
+  width: 920px;
+  margin: auto;
+  margin-top: 50px;
+}
 #results li {
   width: fit-content;
   margin: auto;

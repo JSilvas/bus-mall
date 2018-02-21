@@ -8,6 +8,9 @@ Product.allProducts = []; // Array of all Product instances
 Product.viewed = []; // Holds previously viewed image set
 Product.totalClicks = 0; // Counter for 25 cycles
 
+// ChartJS global data
+var ctx = document.getElementById('bar-chart');
+
 // global vars for DOM access
 Product.survey = document.getElementById('survey');
 Product.pics = [document.getElementById('left'), document.getElementById('center'), document.getElementById('right')];
@@ -75,8 +78,8 @@ function clickHandler(event) { // Add real-time answer counter here
   console.log('total clicks: ' + Product.totalClicks);
   if (Product.totalClicks > 24) {
     Product.survey.removeEventListener('click', clickHandler);
-    //Product.survey.style.display = 'none';  // Why this?
-    showResults();
+    Product.survey.style.display = 'none';  //removes survey container from page
+    barChart();
   }
   Product.totalClicks += 1; // this might be adding to clicks whether you click a picture or not??
   for (var i = 0; i < Product.names.length; i++) {
@@ -109,6 +112,55 @@ function showResults() {
 
     Product.results.appendChild(liEl);
   }
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++
+// CHART STUFF
+// Charts rendered using Chart JS v.2.6.0
+// http://www.chartjs.org/
+// ++++++++++++++++++++++++++++++++++++++++++++
+function barChart() {
+  var ctx = document.getElementById('bar-chart').getContext('2d');
+  var votes = [];
+  for (var i = 0; i < Product.allProducts.length; i++) {
+    votes[i] = Product.allProducts[i].votes;
+  }
+  var barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Product.names,
+      datasets: [{
+        label: '# of Votes',
+        data: votes,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
 }
 
 //++++++++++++++++++++++++++++++
