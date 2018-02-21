@@ -8,9 +8,6 @@ Product.allProducts = []; // Array of all Product instances
 Product.viewed = []; // Holds previously viewed image set
 Product.totalClicks = 0; // Counter for 25 cycles
 
-// ChartJS global data
-var ctx = document.getElementById('bar-chart');
-
 // global vars for DOM access
 Product.survey = document.getElementById('survey');
 Product.pics = [document.getElementById('left'), document.getElementById('center'), document.getElementById('right')];
@@ -78,7 +75,7 @@ function clickHandler(event) { // Add real-time answer counter here
   console.log('total clicks: ' + Product.totalClicks);
   if (Product.totalClicks > 24) {
     Product.survey.removeEventListener('click', clickHandler);
-    Product.survey.style.display = 'none';  //removes survey container from page
+    Product.survey.style.display = 'none'; //removes survey container from page
     barChart();
   }
   Product.totalClicks += 1; // this might be adding to clicks whether you click a picture or not??
