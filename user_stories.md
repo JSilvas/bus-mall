@@ -8,6 +8,7 @@ As a developer, I want to ensure that participants are strictly limited in their
 As a developer, I should  organize and test components procedurally throughout the build process, so that it remains well organized and more easily debugged.
 As a developer, I want the interfaces to be simple and self-evident, so that confusion and mis-use is mitigated.
 As a developer, I should regularly ACP to maintain good git flow and avoid losing progress on work.
+As a developer, I want to hide the product image choices after 25 clicks so that my chart is the focus of the page.
 
 As a focus group participant, I should be able to easily choose my responses, so that I do not make any unintended choices.
 As a focus group participant, I would like to see the results of my choices after the survey, so that I can recieve some sort of feedback.
