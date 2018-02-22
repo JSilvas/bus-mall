@@ -1,4 +1,4 @@
-'usage strict';
+'use strict';
 console.log('We have signal!');
 //++++++++++++++++++++++++++++++
 // SETTING UP GLOBAL DATA
@@ -8,10 +8,7 @@ Product.allProducts = []; // Array of all Product instances
 Product.viewed = []; // Holds previously viewed image set
 Product.totalClicks = 0; // Counter for 25 cycles
 
-// ChartJS global data
-var ctx = document.getElementById('bar-chart');
-
-// global vars for DOM access
+// Global vars for DOM access
 Product.survey = document.getElementById('survey');
 Product.pics = [document.getElementById('left'), document.getElementById('center'), document.getElementById('right')];
 Product.results = document.getElementById('results');
@@ -33,7 +30,6 @@ function getInstances() {
   for (var i = 0; i < Product.names.length; i++) {
     new Product(Product.names[i]);
   }
-  console.table(Product.allProducts);
 }
 
 //++++++++++++++++++++++++++++++
@@ -52,14 +48,10 @@ function showPics() {
   }
   for (var i = 0; i < 3; i++) {
     var current = Product.viewed.shift();
-    console.log(current,'before for');
-    console.log(Product.allProducts);
-    console.table(Product.allProducts);
     Product.pics[i].src = Product.allProducts[current].path;
     Product.pics[i].alt = Product.allProducts[current].name;
     Product.pics[i].title = Product.allProducts[current].name;
     Product.allProducts[current].views += 1;
-    console.log(current,'after for');
   }
   console.log('Viewed array: ' + Product.viewed);
 }
@@ -68,44 +60,22 @@ function clickHandler(event) { // Add real-time answer counter here
   if (event.target === Product.survey) {
     return alert('Please select an image!');
   }
+  Product.totalClicks += 1;
   console.log('total clicks: ' + Product.totalClicks);
-  if (Product.totalClicks > 24) {
-    Product.survey.removeEventListener('click', clickHandler);
-    Product.survey.style.display = 'none'; //removes survey container from page
-    localStorage.setItem('allProductsToLS', JSON.stringify(Product.allProducts)); // store current state
-    barChart();
-  }
-  Product.totalClicks += 1; // this might be adding to clicks whether you click a picture or not??
   for (var i = 0; i < Product.names.length; i++) {
     if (event.target.alt === Product.allProducts[i].name) {
       Product.allProducts[i].votes += 1;
       console.log(event.target.alt + ' has: ' + Product.allProducts[i].votes + ' votes and ' + Product.allProducts[i].views + ' views.');
     }
   }
-  // Adding Visual Counter element on index
-  // var h3El = document.getElementById(answered);
-  // liEl.textContent = Product.
-  showPics();
-}
-
-function showResults() {
-  for (var i = 0; i < Product.allProducts.length; i++) {
-    var liEl = document.createElement('li');
-    var conversion = (Product.allProducts[i].votes / Product.allProducts[i].views * 100).toFixed(1);
-    liEl.textContent = Product.allProducts[i].name + ' has ' + Product.allProducts[i].votes + ' votes in ' + Product.allProducts[i].views + ' views  for a click-through conversion rate of ' + conversion + '%';
-
-    if (conversion > 50) {
-      liEl.style.color = 'white';
-      liEl.style.backgroundColor = 'green';
-    }
-
-    if (conversion < 30) {
-      liEl.style.color = 'white';
-      liEl.style.backgroundColor = 'red';
-    }
-
-    Product.results.appendChild(liEl);
+  if (Product.totalClicks > 24) {
+    Product.survey.removeEventListener('click', clickHandler);
+    Product.survey.style.display = 'none'; //removes survey container from page
+    localStorage.setItem('allProductsToLS', JSON.stringify(Product.allProducts)); // store current state
+    barChart();
+    console.log('Total clicks at end of survey: ' + Product.totalClicks);
   }
+  showPics();
 }
 
 // ++++++++++++++++++++++++++++++++++++++++++++
@@ -119,57 +89,17 @@ function barChart() {
   for (var i = 0; i < Product.allProducts.length; i++) {
     votes.push(Product.allProducts[i].votes);
   }
-  var barChart = new Chart(ctx, {
+  new Chart(ctx, {
     type: 'bar',
     data: {
       labels: Product.names,
       datasets: [{
         label: '# of Votes',
         data: votes,
-        backgroundColor: [
+        backgroundColor:
+        'cadetblue',
+        borderColor:
           'blue',
-          'blueviolet',
-          'brown',
-          'burlywood',
-          'cadetblue',
-          'chartreuse',
-          'chocolate',
-          'coral',
-          'cornflowerblue',
-          'cornsilk',
-          'crimson',
-          'cyan',
-          'darkblue',
-          'darkcyan',
-          'darkgoldenrod',
-          'darkgray',
-          'darkgrey',
-          'darkgreen',
-          'markkhaki',
-          'darkmagenta'
-        ],
-        borderColor: [
-          'blue',
-          'blueviolet',
-          'brown',
-          'burlywood',
-          'cadetblue',
-          'chartreuse',
-          'chocolate',
-          'coral',
-          'cornflowerblue',
-          'cornsilk',
-          'crimson',
-          'cyan',
-          'darkblue',
-          'darkcyan',
-          'darkgoldenrod',
-          'darkgray',
-          'darkgrey',
-          'darkgreen',
-          'markkhaki',
-          'darkmagenta'
-        ],
         borderWidth: 1
       }]
     },
