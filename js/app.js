@@ -29,25 +29,16 @@ function Product(name) {
 //++++++++++++++++++++++++++++++
 // INSTANCES
 //++++++++++++++++++++++++++++++
-for (var i = 0; i < Product.names.length; i++) {
-  new Product(Product.names[i]);
+function getInstances() {
+  for (var i = 0; i < Product.names.length; i++) {
+    new Product(Product.names[i]);
+  }
+  console.table(Product.allProducts);
 }
-console.table(Product.allProducts);
 
 //++++++++++++++++++++++++++++++
 // FUNCTION DECLARATIONS
 //++++++++++++++++++++++++++++++
-/* function randomPics() { // Returns an array of 3 unique pics
-  var pickArray = [];
-  while (pickArray[0] === pickArray[1] || pickArray[0] === pickArray[2] || pickArray[1] === pickArray[2]) {
-    pickArray = [];
-    for (var i = 0; i < 3; i++) {
-      var random = Math.floor(Math.random() * Product.allProducts.length);
-      pickArray.push(random);
-    }
-  }
-  return pickArray;
-} */
 function getRandomPic() {
   return Math.floor(Math.random() * Product.names.length);
 }
@@ -62,6 +53,8 @@ function showPics() {
   for (var i = 0; i < 3; i++) {
     var current = Product.viewed.shift();
     console.log(current,'before for');
+    console.log(Product.allProducts);
+    console.table(Product.allProducts);
     Product.pics[i].src = Product.allProducts[current].path;
     Product.pics[i].alt = Product.allProducts[current].name;
     Product.pics[i].title = Product.allProducts[current].name;
@@ -78,7 +71,8 @@ function clickHandler(event) { // Add real-time answer counter here
   console.log('total clicks: ' + Product.totalClicks);
   if (Product.totalClicks > 24) {
     Product.survey.removeEventListener('click', clickHandler);
-    Product.survey.style.display = 'none';  //removes survey container from page
+    Product.survey.style.display = 'none'; //removes survey container from page
+    localStorage.setItem('allProductsToLS', JSON.stringify(Product.allProducts)); // store current state
     barChart();
   }
   Product.totalClicks += 1; // this might be adding to clicks whether you click a picture or not??
@@ -116,14 +110,14 @@ function showResults() {
 
 // ++++++++++++++++++++++++++++++++++++++++++++
 // CHART STUFF
-// Charts rendered using Chart JS v.2.6.0
+// Charts rendered using Chart JS v.2.7.1
 // http://www.chartjs.org/
 // ++++++++++++++++++++++++++++++++++++++++++++
 function barChart() {
   var ctx = document.getElementById('bar-chart').getContext('2d');
   var votes = [];
   for (var i = 0; i < Product.allProducts.length; i++) {
-    votes[i] = Product.allProducts[i].votes;
+    votes.push(Product.allProducts[i].votes);
   }
   var barChart = new Chart(ctx, {
     type: 'bar',
@@ -133,20 +127,48 @@ function barChart() {
         label: '# of Votes',
         data: votes,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
+          'blue',
+          'blueviolet',
+          'brown',
+          'burlywood',
+          'cadetblue',
+          'chartreuse',
+          'chocolate',
+          'coral',
+          'cornflowerblue',
+          'cornsilk',
+          'crimson',
+          'cyan',
+          'darkblue',
+          'darkcyan',
+          'darkgoldenrod',
+          'darkgray',
+          'darkgrey',
+          'darkgreen',
+          'markkhaki',
+          'darkmagenta'
         ],
         borderColor: [
-          'rgba(255,99,132,1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
+          'blue',
+          'blueviolet',
+          'brown',
+          'burlywood',
+          'cadetblue',
+          'chartreuse',
+          'chocolate',
+          'coral',
+          'cornflowerblue',
+          'cornsilk',
+          'crimson',
+          'cyan',
+          'darkblue',
+          'darkcyan',
+          'darkgoldenrod',
+          'darkgray',
+          'darkgrey',
+          'darkgreen',
+          'markkhaki',
+          'darkmagenta'
         ],
         borderWidth: 1
       }]
@@ -166,5 +188,11 @@ function barChart() {
 //++++++++++++++++++++++++++++++
 // CODE THAT EXECUTES ON PAGE LOAD
 //++++++++++++++++++++++++++++++
+if (localStorage.allProductsToLS) {
+  Product.allProducts = JSON.parse(localStorage.allProductsToLS); //   retrieve L.S. & assign to [{},{},{}]
+} else {
+  getInstances(); //  create instances from scratch
+}
+
 showPics();
 Product.survey.addEventListener('click', clickHandler);
