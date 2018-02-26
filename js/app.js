@@ -97,7 +97,7 @@ function barChart() {
         label: '# of Votes',
         data: votes,
         backgroundColor:
-        'cadetblue',
+        'rgb(41, 155, 41)',
         borderColor:
           'blue',
         borderWidth: 1
